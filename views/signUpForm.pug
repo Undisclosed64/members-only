@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+      label(for='name') Name:
+      input#name.form-control(type='text', placeholder='name' name='name' value=(undefined===user ? '' : user.name))
+      label(for='password') Password:
+      input#password.form-control(type='text', placeholder='password' name='password' value=(undefined===user ? '' : user.password))
+      button.btn.btn-primary(type='submit') Submit
+
+  if errors
+   ul
+    for error in errors
+     li= error.msg

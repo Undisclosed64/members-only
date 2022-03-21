@@ -1,5 +1,7 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
+
 
 
 var async = require('async');
@@ -13,37 +15,47 @@ exports.homePage = function(req,res){
 
 //get sign up page
 exports.getSignUp = function(req,res){
-    res.render('signUpForm');
+    res.render('signUpForm',{title:'Sign Up'});
 }
 
 //handle post request for signup
 exports.handleSignUp = [
-   
-    body('name').isLength({ min: 1 }),
-    body('password').isLength({ min: 4 }),
+     // Validate and sanitize the field.
+     body('name', 'User name is required').trim().isLength({ min: 1 }).escape(),
+     body('password', 'Password can not be less than 4 characters').trim().isLength({ min: 4}).escape(),
 
-    (req, res) => { 
-        const errors = validationResult(req);
+    (req,res,next) => {
 
-        const user = new User({
-            name:req.body.name,
-            password:req.body.password
-        
-        })
-        
-        if(!errors.isEmpty()){
-            return 'error';
-        } else {
-            user.save(function(err){
+ const errors = validationResult(req);
+
+  const user = new User({
+      name:req.body.name,
+      password:req.body.password
+  })
+ 
+  if (!errors.isEmpty()) {
+    
+    res.render('signUpForm',{user:user,errors:errors.array()})
+
+  } else {
+    bcrypt.hash(user.password,10,(err,hashedPassword) => {
+        if(err){
+            return err;
+        } 
+   const securedUser = new User({
+      name:req.body.name,
+      password:hashedPassword,
+      _id:user._id
+   })
+            securedUser.save(function(err){
                 if(err){
-                    return err;
+                    return next(err);
                 } else {
                     res.redirect('/')
                 }
-            
-            })
-        }
-        }
+        })
         
-    
+        })
+    }
+    }   
 ]
