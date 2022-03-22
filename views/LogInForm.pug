@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+      input#username.form(type='text', placeholder='Name' name='username')
+      input#password.form(type='password', placeholder='Password' name='password' )
+      button.btn.btn-primary(type='submit') Submit
+
+ 

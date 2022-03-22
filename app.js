@@ -1,43 +1,128 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
+const mongoose = require("mongoose");
+const User = require('./models/user');
+const bcrypt = require('bcryptjs')
 
 
-//require main route file
-const indexRouter = require('./routes/index');
-
-
-var app = express();
 
 //Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = process.env.mongoDbUrl;
+const mongoDB = process.env.mongoDbUrl;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+
+var app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(session({ secret: "tan", resave: false, saveUninitialized: true }));
+
 app.use(logger('dev'));
 app.use(express.json());
+
+//require main route file
+const indexRouter = require('./routes/index');
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) { 
+        return done(err)
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          // passwords match! log user in
+          return done(null, user)
+        } else {
+          // passwords do not match!
+          return done(null, false, { message: "Incorrect password" })
+        }
+      })
+    });
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.post(
+  "/log-in",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in"
+  })
+);
+
+app.get("/log-out", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
+
+app.get('/',function(req,res){
+  res.render('index',{ user: req.user })
+})
+
+// Access the user object from anywhere in our application
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 //use route
 app.use('/',indexRouter)
+
+/*app.post(
+  "/log-in",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in"
+  })
+);
+
+app.get("/log-out", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+*/
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {

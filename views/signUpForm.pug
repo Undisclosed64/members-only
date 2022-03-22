@@ -1,15 +1,15 @@
 extends layout
 
 block content
-  h1 #{title}
+  h1 #{User}
 
   form(method='POST' action='')
       label(for='name') Name:
-      input#name.form-control(type='text', placeholder='name' name='name' value=(undefined===user ? '' : user.name))
+      input#username.form-control(type='text', placeholder='name' name='username' value=(undefined===user ? '' : user.username))
       label(for='password') Password:
-      input#password.form-control(type='text', placeholder='password' name='password' value=(undefined===user ? '' : user.password))
+      input#password.form-control(type='password', placeholder='password' name='password' value=(undefined===user ? '' : user.password))
       label(for='password') Confirm password:
-      input#confirmPassword.form-control(type='text', placeholder='confirmPassword' name='confirmPassword' value=(undefined===user ? '' : user.confirmPassword))
+      input#confirmPassword.form-control(type='password', placeholder='confirmPassword' name='confirmPassword' value=(undefined===user ? '' : user.confirmPassword))
       button.btn.btn-primary(type='submit') Submit
 
   if errors
