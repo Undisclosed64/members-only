@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const Message = require('../models/message');
 const { body, validationResult,check} = require('express-validator');
 var async = require('async');
 
@@ -19,7 +20,9 @@ exports.getSignUp = function(req,res){
 exports.handleSignUp = [
    
      // Validate and sanitize the field.
-     body('username', 'User name is required').trim().isLength({ min: 1 }).escape(),
+     body('username').trim().isLength({ min: 1 }).escape().withMessage('username is required') 
+     .isAlphanumeric().withMessage('Name has non-alphanumeric characters.'),
+
      body('password', 'Password can not be less than 4 characters').trim().isLength({ min: 4}).escape(),
 
      //check that both password and confirm password field has the same value
@@ -98,4 +101,35 @@ if(passCode!== '432'){
     });
 }
 
+}
+
+exports.createMsgGet = function(req,res){
+if(res.locals.currentUser!==undefined){
+    res.render('createMsgForm',{title:'Create a message'})
+}
+res.redirect('/')
+}
+
+exports.createMsgPost = function(req,res,next){
+body('title').trim().isLength({ min: 1 }).escape().withMessage('Title is required!')
+body('text').trim().isLength({ min: 5 }).escape().withMessage('Text can not be empty!');
+
+       
+//process the request
+    const errors = validationResult(req);
+     const message = new Message({
+         title:req.body.title,
+          text:req.body.text,
+          date:new Date()
+     })
+     //check if the validation and santization has passed or not
+     if (!errors.isEmpty()) {
+       res.render('createMsgForm',{message:message,errors:errors.array()})
+     }
+ message.save(function(err){
+     if(err){
+         return next(err)
+     }
+     res.redirect('/')
+ })
 }
