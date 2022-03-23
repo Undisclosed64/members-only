@@ -18,6 +18,10 @@ router.get('/log-in',mainController.getLogIn);
 router.get('/become-member',mainController.becomeMemberGet)
 
 //post for become-member
-router.post('/become-member',mainController.becomeMemberPost)
+router.post('/become-member',mainController.becomeMemberPost);
+
+router.get('/message/create',mainController.createMsgGet);
+
+router.post('/message/create',mainController.createMsgPost);
 
 module.exports = router;
