@@ -90,9 +90,9 @@ app.get("/log-out", (req, res) => {
 });
 
 
-app.get('/',function(req,res){
-  res.render('index',{ user: req.user })
-})
+//app.get('/',function(req,res){
+ // res.render('index',{ user: req.user })
+//})
 
 // Access the user object from anywhere in our application
 app.use((req, res, next) => {
