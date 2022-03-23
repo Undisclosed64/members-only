@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+      input#title.form(type='text', placeholder='Title' name='title')
+      input#text.form(type='text', placeholder='Text' name='text' )
+      button(type='submit') Submit
+
+  
