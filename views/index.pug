@@ -2,8 +2,16 @@ extends layout
 
 block content
   p Welcome to #[em Memebers only]
-
+ 
+   if messages 
+   each msg in messages 
+    br
+    h1=msg.title 
+    p=msg.text 
+    p=msg.date
+    p=msg.user.username
+  
    if user 
-    h1= user.username
+    h1=user.username
     a(href='/log-out') Log out
    
