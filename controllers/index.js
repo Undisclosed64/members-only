@@ -7,8 +7,15 @@ var async = require('async');
 
 //All the routes will go here
 //home page
-exports.homePage = function(req,res){
-   // res.render('index',{ user: req.user });
+exports.homePage = function(req,res,next){
+    Message.find({})
+    .populate('user')
+    .exec(function(err,messages){
+        if(err){
+            return next(err)
+        }
+        res.render('index',{ user: req.user,messages:messages})
+   })
 }
 
 //get sign up page
@@ -92,7 +99,7 @@ const passCode = req.body.passcode;
 if(passCode!== '432'){
     res.send('Wrong passcode!')
 } else {
-    const user = res.locals.currentUser;
+    const user = new User(res.locals.currentUser);
     user.isMember = true;
 
     User.findByIdAndUpdate(res.locals.currentUser._id, user, (err) => {
@@ -112,16 +119,19 @@ res.redirect('/')
 
 exports.createMsgPost = function(req,res,next){
 body('title').trim().isLength({ min: 1 }).escape().withMessage('Title is required!')
-body('text').trim().isLength({ min: 5 }).escape().withMessage('Text can not be empty!');
+body('text').trim().isLength({ min: 1 }).escape().withMessage('Text can not be empty!');
 
        
 //process the request
     const errors = validationResult(req);
+
      const message = new Message({
          title:req.body.title,
           text:req.body.text,
-          date:new Date()
+          date:Date.now(),
+          user:req.user._id
      })
+     console.log(message.user)
      //check if the validation and santization has passed or not
      if (!errors.isEmpty()) {
        res.render('createMsgForm',{message:message,errors:errors.array()})
@@ -129,7 +139,6 @@ body('text').trim().isLength({ min: 5 }).escape().withMessage('Text can not be e
  message.save(function(err){
      if(err){
          return next(err)
-     }
-     res.redirect('/')
+     }     res.redirect('/')
  })
 }
