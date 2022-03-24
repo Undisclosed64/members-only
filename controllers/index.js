@@ -102,7 +102,7 @@ if(passCode!== '432'){
     const user = new User(res.locals.currentUser);
     user.isMember = true;
 
-    User.findByIdAndUpdate(res.locals.currentUser._id, user, (err) => {
+    User.findByIdAndUpdate(res.locals.currentUser._id, user, {}, (err) => {
       if (err) return next(err);
       return res.redirect("/");
     });
@@ -120,6 +120,7 @@ res.redirect('/')
 exports.createMsgPost = function(req,res,next){
 body('title').trim().isLength({ min: 1 }).escape().withMessage('Title is required!')
 body('text').trim().isLength({ min: 1 }).escape().withMessage('Text can not be empty!');
+body('date', 'Invalid date').optional({ checkFalsy: true }).isISO8601().toDate();
 
        
 //process the request
