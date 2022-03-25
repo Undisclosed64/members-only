@@ -1,12 +1,12 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+require('dotenv').config({ path: '.env' });
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-require('dotenv').config()
 const mongoose = require("mongoose");
 const User = require('./models/user');
 const bcrypt = require('bcryptjs')
