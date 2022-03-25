@@ -1,8 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #393e46;
+  font-family: "Open Sans", sans-serif;
+  color: #eeeeee;
+}
+p {
+  font-size: 1rem;
+}
+#brand {
+  font-size: 1.4rem;
+}
+#main-container {
+  padding: 1em;
+  padding-top: 5em;
+}
+.msg-cell {
+  padding: 1em;
+  padding-bottom: 0;
+  margin-bottom: 3em;
+  border-radius: 5px;
+  background-color: #222831;
+}
+.msgTitle {
+  font-weight: 600;
+  font-size: 1.6rem;
+  padding-bottom: 0.6em;
+}
+.msgText {
+  font-size: 1rem;
+  padding-bottom: 1em;
+  line-height: 28px;
+}
+.creationInfo {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  font-weight: 500;
+}
+.timeStamp {
+  background-color: #393e46;
+  border-radius: 20px;
+  padding: 0.5em;
+}
+.writer {
+  background-color: #393e46;
+  border-radius: 20px;
+  padding: 0.3em 0.6em;
+}
+.formWrapper {
+  background-color: #222831;
+  margin: 5em 1em 10em 1em;
+  padding: 1.5em 1em;
+  border-radius: 8px;
+}
+.form-header {
+  border-bottom: 0.1px solid gray;
+  padding-bottom: 10px;
+  text-align: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  background-color: transparent;
+  border-bottom: 1px solid gray !important;
+  border: none;
+  margin: 1.1em;
+  padding: 0.5em;
+  width: 100%;
+  color: #eeeeee;
+}
+input:focus {
+  outline: none;
+  border-bottom-color: #00adb5 !important;
+  color: #eeeeee;
+}
+.submitBtn {
+  width: 100%;
+  margin-top: 1em;
+  background-color: #00adb5;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8em;
+  text-transform: uppercase;
+  color: #eeeeee;
+  letter-spacing: 2px;
+  font-weight: 500px;
+}
+#memberForm {
+  margin-top: 8em;
+}
+.errMsg {
+  font-size: 1.2rem;
+  color: #ff3333;
+  margin: 0.5em;
+}
+@media only screen and (min-width: 400px) {
+  #main-container {
+    padding: 1.5em;
+    padding-top: 5em;
+  }
+  .formWrapper {
+    margin: 5em 2em 10em 2em;
+  }
+}
+@media only screen and (min-width: 568px) {
+  #main-container {
+    padding: 3em;
+    padding-top: 5em;
+  }
+  .msg-cell {
+    padding: 2em;
+    padding-bottom: 0;
+  }
+  .msgText {
+    line-height: 30px;
+  }
+  .formWrapper {
+    margin: 5em 3em 10em 3em;
+    padding: 1.5em 5em;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .formContainer {
+    margin: 5em 3em 10em 3em;
+  }
+  .formWrapper {
+    max-width: 600px;
+    margin: auto;
+  }
 }
 
-a {
-  color: #00B7FF;
+@media only screen and (min-width: 868px) {
+  #main-container {
+    padding: 5em;
+    padding-top: 5em;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .msg-cell {
+    min-width: 600px;
+    max-width: 600px;
+  }
+  .msgText {
+    line-height: 30px;
+  }
 }
