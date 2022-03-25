@@ -12,7 +12,6 @@ const User = require('./models/user');
 const bcrypt = require('bcryptjs')
 
 
-
 //Set up mongoose connection
 const mongoDB = process.env.mongoDbUrl;
 
@@ -34,6 +33,7 @@ app.use(express.json());
 
 //require main route file
 const indexRouter = require('./routes/index');
+const message = require('./models/message');
 
 passport.use(
   new LocalStrategy((username, password, done) => {
@@ -52,6 +52,7 @@ passport.use(
           // passwords do not match!
           return done(null, false, { message: "Incorrect password" })
         }
+
       })
     });
   })
@@ -78,21 +79,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post(
   "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
+  passport.authenticate("local", {successRedirect: "/",
     failureRedirect: "/log-in"
-  })
+  }),
 );
 
 app.get("/log-out", (req, res) => {
   req.logout();
   res.redirect("/");
 });
-
-
-//app.get('/',function(req,res){
- // res.render('index',{ user: req.user })
-//})
 
 // Access the user object from anywhere in our application
 app.use((req, res, next) => {
@@ -102,20 +97,6 @@ app.use((req, res, next) => {
 
 //use route
 app.use('/',indexRouter)
-
-/*app.post(
-  "/log-in",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/log-in"
-  })
-);
-
-app.get("/log-out", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
-*/
 
 
 // catch 404 and forward to error handler
