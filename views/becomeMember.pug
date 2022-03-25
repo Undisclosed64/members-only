@@ -1,10 +1,12 @@
 extends layout
 
 block content
-  h1 #{title}
+ div.formContainer
+  div.formWrapper#memberForm
+   h1.form-header Become a member
+   form(method='POST' action='')
+    input#passcode(type='password', placeholder='Enter passcode' name='passcode')
+    button.submitBtn(type='submit') Submit
 
-  form(method='POST' action='')
-      input#passcode(type='password', placeholder='Enter passcode' name='passcode')
-      button(type='submit') Submit
-
-  
+   if err 
+    div.errMsg= err
