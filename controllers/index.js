@@ -70,12 +70,13 @@ exports.handleSignUp = [
                 if(err){
                     return next(err);
                 } else {
-                    res.redirect('/')
+                    res.redirect('/log-in')
                 }
         })
         
         })
-    }  
+    },
+    
 ]
 
 //handle get login
@@ -117,7 +118,7 @@ exports.createMsgGet = function(req,res,next){
 exports.createMsgPost = [
 
 body('title').trim().isLength({ min: 1 }).escape().withMessage('Title must not be empty!'),
-body('text').trim().isLength({ min: 1 }).escape().withMessage('Text can not be empty!'),
+body('text').isLength({ min: 1 }).withMessage('Text can not be empty!'),
 
 (req,res,next) => {
     //process the request

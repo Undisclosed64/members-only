@@ -7,13 +7,15 @@ html(lang='en')
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
     script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js", integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj", crossorigin="anonymous")
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js", integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV", crossorigin="anonymous")
+    <script src="https://kit.fontawesome.com/d99453d1c3.js" crossorigin="anonymous"></script>
     link(rel='stylesheet', href='/stylesheets/style.css')
 
 
   body
    nav(class="navbar navbar-expand-md navbar-dark bg-dark")
       .container-fluid
-        a#brand(class="navbar-brand" href="/") Members Only 
+        a#brand(class="navbar-brand" href="/") Members Only
+         span .
         button(class="navbar-toggler" type="button" 
             data-toggle="collapse" data-target="#navbarNavAltMarkup" 
             aria-controls="navbarNavAltMarkup" aria-expanded="false" 
@@ -25,11 +27,11 @@ html(lang='en')
              a.link(class="nav-link" href="/log-in") Log In
              a.link(class="nav-link" href="/sign-up") Sign Up
             else 
-             a(class="nav-link" href='/message/create') Create a post
-             a(class="nav-link" href='/become-member') Become member
-             a(class="nav-link" href='/log-out') Log Out
+             a.link(class="nav-link" href='/message/create') Create a message
+             a.link(class="nav-link" href='/become-member') Become member
+             a.link(class="nav-link" href='/log-out') Log Out
              div.loggedUser
-              a(class="nav-link" href='/') #{user.username}
+              a.link(class="nav-link" href='/') #{user.username}
 
   block content
   

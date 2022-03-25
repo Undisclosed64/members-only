@@ -7,10 +7,10 @@ block content
      div.msg-cell
       div.msgTitle=msg.title 
       p.msgText=msg.text 
-      div.creationInfo
-       p.timeStamp=msg.formatted_date
+      div.creationInfo 
+       p.timeStamp <i class="fa-solid fa-clock"></i> #{msg.formatted_date}
        if (user && user.isMember)
-        p.writer By #{msg.user.username}
+        p.writer <i class="fa-solid fa-user"></i> #{msg.user.username}
        else 
-        p.writer By  Unknown
+        p.writer <i class="fa-solid fa-user"></i> Unknown
    

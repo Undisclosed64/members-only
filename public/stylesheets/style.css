@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@500&display=swap");
 
 * {
   box-sizing: border-box;
@@ -14,8 +15,27 @@ p {
   font-size: 1rem;
 }
 #brand {
-  font-size: 1.4rem;
+  font-weight: 700;
+  font-size: 1.8rem;
 }
+#brand:hover {
+  color: #00adb5;
+  transition: color ease-in-out 1s;
+}
+#brand:hover span {
+  color: #eeeeee;
+  transition: color ease-in-out 1s;
+}
+span {
+  font-size: 2.5rem;
+  padding-left: 2px;
+  color: #00adb5;
+}
+.link {
+  color: #eeeeee !important;
+  margin: 0 1em;
+}
+
 #main-container {
   padding: 1em;
   padding-top: 5em;
@@ -31,6 +51,7 @@ p {
   font-weight: 600;
   font-size: 1.6rem;
   padding-bottom: 0.6em;
+  text-transform: capitalize;
 }
 .msgText {
   font-size: 1rem;
@@ -47,11 +68,19 @@ p {
   background-color: #393e46;
   border-radius: 20px;
   padding: 0.5em;
+  font-family: "Fira Mono", monospace;
 }
 .writer {
   background-color: #393e46;
   border-radius: 20px;
   padding: 0.3em 0.6em;
+  font-family: "Fira Mono", monospace;
+}
+.writer:hover {
+  cursor: pointer;
+}
+button:hover {
+  cursor: pointer;
 }
 .formWrapper {
   background-color: #222831;
@@ -60,7 +89,7 @@ p {
   border-radius: 8px;
 }
 .form-header {
-  border-bottom: 0.1px solid gray;
+  border-bottom: 0.1px solid #eeeeee;
   padding-bottom: 10px;
   text-align: center;
 }
@@ -83,6 +112,9 @@ input:focus {
   outline: none;
   border-bottom-color: #00adb5 !important;
   color: #eeeeee;
+}
+button:focus {
+  outline: none;
 }
 .submitBtn {
   width: 100%;
