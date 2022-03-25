@@ -13,8 +13,7 @@ const bcrypt = require('bcryptjs')
 
 
 //Set up mongoose connection
-const mongoDB = process.env.mongoDbUrl;
-
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -33,7 +32,6 @@ app.use(express.json());
 
 //require main route file
 const indexRouter = require('./routes/index');
-const message = require('./models/message');
 
 passport.use(
   new LocalStrategy((username, password, done) => {
