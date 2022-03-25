@@ -1,20 +1,16 @@
 extends layout
 
 block content
-  p Welcome to #[em Memebers only]
- 
-   if messages 
-   each msg in messages 
-    br
-    h1=msg.title 
-    p=msg.text 
-    p=msg.formatted_date
-    if (user && user.isMember)
-     p By #{msg.user.username}
-    else 
-     p By Unknown
-     
-   if user 
-    h1=user.username
-    a(href='/log-out') Log out
+ main#main-container
+  if messages 
+    each msg in messages 
+     div.msg-cell
+      div.msgTitle=msg.title 
+      p.msgText=msg.text 
+      div.creationInfo
+       p.timeStamp=msg.formatted_date
+       if (user && user.isMember)
+        p.writer By #{msg.user.username}
+       else 
+        p.writer By  Unknown
    
