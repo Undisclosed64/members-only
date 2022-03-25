@@ -1,25 +1,23 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const mongoose = require("mongoose");
-require("dotenv").config();
 const User = require('./models/user');
 const bcrypt = require('bcryptjs')
 
 
 //Set up mongoose connection
+const mongoose = require("mongoose");
 const mongoDB = process.env.MONGODB_URI;
-//console.log(mongoDB)
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-mongoose.set('useFindAndModify', false)
-
 
 
 var app = express();
