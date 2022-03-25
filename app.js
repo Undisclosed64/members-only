@@ -9,7 +9,8 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const compression = require('compression');
 
 
 //Set up mongoose connection
@@ -21,6 +22,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 var app = express();
+
+// compress all responses
+app.use(compression())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
